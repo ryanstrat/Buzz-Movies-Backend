@@ -1,4 +1,4 @@
-
+<?php
 // Config settings for the database server
 define("HOST", "REPLACE WITH SERVER IP"); //Server must run on port 3306
 define("USER", "REPLACE WITH USERNAME");
