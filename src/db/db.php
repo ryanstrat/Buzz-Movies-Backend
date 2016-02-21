@@ -59,8 +59,8 @@ function mysqli_prepared_query($app, $link,$sql,$typeDef = FALSE,$params = FALSE
 	} else { 
 		
 	    $app->logger->error("Error: Unable to connect to MySQL.");
-	    $app->logger->error("Debugging errno: " . mysqli_connect_errno() );
-	    $app->logger->error("Debugging error: " . mysqli_connect_error() );
+	    $app->logger->error("Debugging errno: " . mysqli_errno($link) );
+	    $app->logger->error("Debugging error: " . mysqli_error($link) );
 	    exit();
 	} 
 	

@@ -29,9 +29,8 @@ $app->post('/api/user/register', function ($request, $response, $args) {
 		return $response->withStatus(400)->withHeader('Content-Type', 'application/json')->write(json_encode(array('login' => False)));
 	}
 
-	$sessionKey = base64_encode(openssl_random_pseudo_bytes(32));
+	$sessionKey = generate_session_key($this, $email);
 	$jsonResponse = array("sessionKey"=>$sessionKey);
-	//var_dump($jsonResponse);
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($jsonResponse));
 
 });

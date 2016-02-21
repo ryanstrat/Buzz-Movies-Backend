@@ -11,43 +11,22 @@ $app->post('/api/user/login', function ($request, $response, $args) {
 	$this->logger->debug("email: " . $email);
 	$this->logger->debug("password: " . $password);
 
+	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
+	$query = "SELECT id, hash FROM accounts WHERE email=?";
+	$SQLparams = array($email);
+	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
 
-	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+	$hash = $result[0]["hash"];
 
-	if ($mysqli->connect_errno) {
-	    $this->logger->error( "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error);
-	    exit();
-	}
-	if (!($stmt = $mysqli->prepare("SELECT id, salt, hash FROM accounts WHERE email=(?)"))) {
-	    $this->logger->error("Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error);
-	    exit();
-	}
-
-	$stmt->bind_param("s", $email);
-
-	if (!$stmt->execute()) {
-	    $this->logger->error("Execute failed: (" . $mysqli->errno . ") " . $mysqli->error);
-	    exit();
-	}
-	if (!($res = $stmt->get_result())) {
-	    $this->logger->error("Getting result set failed: (" . $stmt->errno . ") " . $stmt->error);
-	    exit();
+	if(!password_verify($password, $hash)){
+		return $response->withHeader('Content-Type', 'application/json')->write(json_encode(array("login"=>False)));
 	}
 
-	$row = $res->fetch_assoc();
-	
-	if (count($row) > 0) {
-		$login = TRUE;
-	} else {
-		$login = FALSE;
-	}
+	$data['login'] = True;
+	$data['accountType'] = get_account_type_from_email($this, $email);
+	$data['sessionKey'] = get_session_key_from_email($this, $email);
 
-	$this->logger->debug(count($row));
 
-	if ($login) {
-		echo json_encode(array("login" => TRUE, "sessionKey" => "01234567890123456789012345678901")); //TODO: Replace with cryptographic pseudorandom number generator, return account type
-	} else {
-		echo json_encode(array("login" => FALSE));
-	}
+	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
 
 });
