@@ -56,7 +56,7 @@ function get_account_from_key($app, $sessionKey){
 	mysqli_close($link);
 
 	$email = $result[0]["email"];
-	return $email, get_account_type_from_email($app, $email));
+	return $email;// get_account_type_from_email($app, $email));
 }
 
 function get_session_key_from_email($app, $email) {
