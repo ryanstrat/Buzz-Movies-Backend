@@ -29,7 +29,7 @@ function generate_session_key($app, $email){
 
 function get_account_type_from_email($app, $email){
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$query = "SELECT COUNT(*) FROM accounts INNER JOIN users ON accounts.id = users.account_id where email=?";
+	$query = "SELECT COUNT(*) FROM accounts INNER JOIN users ON accounts.id = users.account_id WHERE email=?";
 	$SQLparams = array($email);
 	$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
 
@@ -37,7 +37,7 @@ function get_account_type_from_email($app, $email){
 		mysqli_close($link);
 		return "user";
 	} else {
-		$query = "SELECT COUNT(*) FROM accounts INNER JOIN admins ON accounts.id = admins.account_id where email=?";
+		$query = "SELECT COUNT(*) FROM accounts INNER JOIN admins ON accounts.id = admins.account_id WHERE email=?";
 		$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
 		if ($result[0]["COUNT(*)"] == 1) {
 			mysqli_close($link);
@@ -48,16 +48,15 @@ function get_account_type_from_email($app, $email){
 	return NULL;
 }	
 
-function get_account_type_from_key($app, $sessionKey){
+function get_account_from_key($app, $sessionKey){
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$query = "SELECT account_id FROM sessions where key=?";
+	$query = "SELECT email FROM sessions INNER JOIN accounts ON sessions.account_id = accounts.id WHERE key=?";
 	$SQLparams = array($sessionKey);
 	$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
 	mysqli_close($link);
 
-
-
-	return get_account_type_from_email($email);
+	$email = $result[0]["email"];
+	return $email, get_account_type_from_email($app, $email));
 }
 
 function get_session_key_from_email($app, $email) {

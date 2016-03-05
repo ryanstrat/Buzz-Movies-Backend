@@ -15,3 +15,5 @@ $app->get('/[{name}]', function ($request, $response, $args) {
 include "routes/login.php";
 
 include "routes/register.php";
+
+include "routes/updateProfile.php";

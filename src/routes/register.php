@@ -7,8 +7,8 @@ $app->post('/api/user/register', function ($request, $response, $args) {
 	$password = $params["password"];
 	$accountType = $params['accountType'];
 
-	$this->logger->debug("email: ". $email);
-	$this->logger->debug("password: " . $password);
+	$this->logger->info("Register: ". $email);
+	//$this->logger->debug("password: " . $password);
 
 	$hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -30,7 +30,7 @@ $app->post('/api/user/register', function ($request, $response, $args) {
 	}
 
 	$sessionKey = generate_session_key($this, $email);
-	$jsonResponse = array("sessionKey"=>$sessionKey);
+	$jsonResponse = array("token"=>$sessionKey);
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($jsonResponse));
 
 });
