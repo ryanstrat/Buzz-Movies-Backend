@@ -16,4 +16,4 @@ include "routes/login.php";
 
 include "routes/register.php";
 
-include "routes/updateProfile.php";
+include "routes/profile.php";

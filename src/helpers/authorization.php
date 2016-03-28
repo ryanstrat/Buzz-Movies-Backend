@@ -48,15 +48,15 @@ function get_account_type_from_email($app, $email){
 	return NULL;
 }	
 
-function get_account_from_key($app, $sessionKey){
+function get_email_from_key($app, $sessionKey){
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$query = "SELECT email FROM sessions INNER JOIN accounts ON sessions.account_id = accounts.id WHERE key=?";
+	$query = "SELECT email FROM sessions INNER JOIN accounts ON sessions.account_id = accounts.id WHERE sessions.key=?";
 	$SQLparams = array($sessionKey);
 	$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
 	mysqli_close($link);
 
 	$email = $result[0]["email"];
-	return $email;// get_account_type_from_email($app, $email));
+	return $email;
 }
 
 function get_session_key_from_email($app, $email) {
