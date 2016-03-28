@@ -3,17 +3,15 @@
 $app->post('/api/account', function ($request, $response, $args) {
 	$params = $request->getParsedBody();
 
-	$targetAccounts = $params["targetEmails"];
-	$targetStatus = $params["targetStatus"];
+	$email = $params["email"];
+	$status = $params["status"];
 
 	$this->logger->info("POST /api/account");
-	$this->logger->info("Setting ".count($targetAccounts)." accounts to ".$targetStatus);
+	$this->logger->info("Setting ".$email." to ".$status);
 
 
 	$query = "UPDATE accounts SET status=? WHERE email=?";
-	$SQLparams = array_map(function($email, $status) {
-		return array($status, $email);
-	}, $targetAccounts, array_fill(0, count($targetAccounts), $targetStatus));
+	$SQLparams = array($status, $email);
 
 
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
