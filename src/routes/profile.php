@@ -43,6 +43,6 @@ $app->get('/api/user', function ($request, $response, $args) {
 	mysqli_close($link);
 
 	$data = $result[0]; //protection again extra db matches
-	//var_dump($result);
+	
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
 });
