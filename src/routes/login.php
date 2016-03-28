@@ -10,16 +10,32 @@ $app->post('/api/user/login', function ($request, $response, $args) {
 
 
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$query = "SELECT id, name, hash FROM accounts WHERE email=?";
+	$query = "SELECT id, name, hash, status FROM accounts WHERE email=?";
 	$SQLparams = array($email);
 	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
 
 	$hash = $result[0]["hash"];
 	$name = $result[0]['name'];
+	$status = $result[0]['status'];
 
-	if(!password_verify($password, $hash)){
-		$this->logger->info("Login Failed - Wrong password: " . $email);
-		return $response->withHeader('Content-Type', 'application/json')->write(json_encode(array("login"=>False)));
+	$isActive = 0 == strcmp($status, 'active');
+	$pwdCorrect = password_verify($password, $hash);
+
+	if (!$isActive || !$pwdCorrect) {
+		$this->logger->info("Login Failed: " . $email);
+		$data['login'] = False;
+
+		if (!$isActive) {
+			$data['error'] = "Login Failed - Account not active";
+			$this->logger->info("Login Failed - Account status: ".$status);
+		}
+
+		if (!$pwdCorrect) {
+			$data['error'] = "Login Failed - Wrong Password";
+			$this->logger->info("Login Failed - Wrong password");
+		}
+
+		return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
 	}
 
 	$this->logger->info("Login Successful: " . $email);
