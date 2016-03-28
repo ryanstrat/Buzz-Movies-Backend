@@ -18,6 +18,8 @@ $app->post('/api/account', function ($request, $response, $args) {
 	$result = mysqli_prepared_query($this, $link, $query, "ss", $SQLparams);
 	mysqli_close($link);
 
+	return $response->withHeader('Content-Type', 'application/json')->write(json_encode(array("status"=>$status)));
+
 });
 
 $app->get('/api/account', function ($request, $response, $args) {
