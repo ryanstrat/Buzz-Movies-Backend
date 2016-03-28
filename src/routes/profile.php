@@ -22,7 +22,7 @@ $app->post('/api/user', function ($request, $response, $args) {
 
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 	$result = mysqli_prepared_query($this, $link, $query, "ssss", $SQLparams);
-	mysql_close($link);
+	mysqli_close($link);
 	var_dump($result);
 
 });
@@ -40,7 +40,7 @@ $app->get('/api/user', function ($request, $response, $args) {
 
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
-	mysql_close($link);
+	mysqli_close($link);
 
 	$data = $result[0]; //protection again extra db matches
 	//var_dump($result);

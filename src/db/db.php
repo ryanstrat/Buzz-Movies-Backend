@@ -1,6 +1,5 @@
 <?php
 
-
 function mysqli_prepared_query($app, $link,$sql,$typeDef = FALSE,$params = FALSE){ 
 	if($stmt = mysqli_prepare($link,$sql)){ 
 		if(count($params) == count($params,1)){ 
@@ -8,7 +7,7 @@ function mysqli_prepared_query($app, $link,$sql,$typeDef = FALSE,$params = FALSE
 			$multiQuery = FALSE; 
 		} else { 
 			$multiQuery = TRUE; 
-		}  
+		}
 		
 		if($typeDef){ 
 			$bindParams = array();    
@@ -20,7 +19,7 @@ function mysqli_prepared_query($app, $link,$sql,$typeDef = FALSE,$params = FALSE
 			array_unshift($bindParamsReferences,$typeDef); 
 			$bindParamsMethod = new ReflectionMethod('mysqli_stmt', 'bind_param'); 
 			$bindParamsMethod->invokeArgs($stmt,$bindParamsReferences); 
-		} 
+		}
 		
 		$result = array(); 
 		foreach($params as $queryKey => $query){ 
@@ -66,7 +65,7 @@ function mysqli_prepared_query($app, $link,$sql,$typeDef = FALSE,$params = FALSE
 	
 	if($multiQuery){ 
 		return $result; 
-	} else { 
+	} else {
 		return $result[0]; 
 	} 
 } 
