@@ -26,11 +26,11 @@ $app->post('/api/user/register', function ($request, $response, $args) {
 		$query = "INSERT INTO users(account_id) VALUES (" . $accountID . ")";
 		mysqli_query($link, $query);
 	} else {
-		return $response->withStatus(400)->withHeader('Content-Type', 'application/json')->write(json_encode(array('login' => False)));
+		return $response->withStatus(400)->withHeader('Content-Type', 'application/json')->write(json_encode(array("login"=>False, "error"=>"Registration Failed")));
 	}
 
 	$sessionKey = generate_session_key($this, $email);
-	$jsonResponse = array("token"=>$sessionKey);
+	$jsonResponse = array("token"=>$sessionKey, "accountType"=>$accountType, "login"=>true);
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($jsonResponse));
 
 });
