@@ -35,7 +35,8 @@ $app->post('/api/user', function ($request, $response, $args) {
 $app->get('/api/user', function ($request, $response, $args) {
 	$params = $request->getQueryParams();
 
-	$email = $params['email'];
+	$token = $params['token'];
+	$email = get_email_from_key($this, $token);
 
 	$this->logger->info("GET /api/user");
 	$this->logger->info("email: ".$email);
@@ -47,6 +48,7 @@ $app->get('/api/user', function ($request, $response, $args) {
 	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
 	mysqli_close($link);
 
+	//var_dump($result);
 	$data = $result[0]; //protection again extra db matches
 	
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
