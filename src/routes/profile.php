@@ -3,17 +3,17 @@
 $app->post('/api/user', function ($request, $response, $args) {
 	$params = $request->getParsedBody();
 
-	$key = $params["token"];
+	$token = $params["token"];
 	$name = $params["name"];
 	$major = $params["major"];
 	$interests = $params["interests"];
 
 	$this->logger->info("POST /api/user");
-	$this->logger->info("token: ".$key);
+	$this->logger->info("token: ".$token);
 	$this->logger->info("name: ".$name);
 	
 
-	$email = get_email_from_key($this, $key);
+	$email = get_email_from_key($this, $token);
 
 	$this->logger->info("email: ".$email);
 
@@ -23,8 +23,13 @@ $app->post('/api/user', function ($request, $response, $args) {
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 	$result = mysqli_prepared_query($this, $link, $query, "ssss", $SQLparams);
 	mysqli_close($link);
-	var_dump($result);
+	
+	$data['name'] = $name;
+	$data['major'] = $major;
+	$data['interests'] = $interests;
+	$data['token'] = $token;
 
+	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
 });
 
 $app->get('/api/user', function ($request, $response, $args) {
