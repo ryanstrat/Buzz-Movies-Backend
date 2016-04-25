@@ -19,3 +19,5 @@ include "routes/register.php";
 include "routes/profile.php";
 
 include "routes/account.php";
+
+include "routes/ratings.php";
