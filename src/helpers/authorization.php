@@ -68,3 +68,20 @@ function get_session_key_from_email($app, $email) {
 
 	return $result[0]["key"];
 }
+
+function login($app, $email, $password) {
+
+	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
+	$query = "SELECT id, name, hash, status FROM accounts WHERE email=?";
+	$SQLparams = array($email);
+	$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
+
+	$hash = $result[0]["hash"];
+	$data["name"] = $result[0]['name'];
+	$status = $result[0]['status'];
+
+	$data["isActive"] = 0 == strcmp($status, 'active');
+	$data["pwdCorrect"] = password_verify($password, $hash);
+
+	return $data;
+}

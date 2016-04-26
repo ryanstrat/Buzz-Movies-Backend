@@ -9,17 +9,11 @@ $app->post('/api/user/login', function ($request, $response, $args) {
 	$password = $params["password"];
 
 
-	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$query = "SELECT id, name, hash, status FROM accounts WHERE email=?";
-	$SQLparams = array($email);
-	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
-
-	$hash = $result[0]["hash"];
-	$name = $result[0]['name'];
-	$status = $result[0]['status'];
-
-	$isActive = 0 == strcmp($status, 'active');
-	$pwdCorrect = password_verify($password, $hash);
+	$data = login($this, $email, $password);
+	
+	$isActive = $data["isActive"];
+	$name = $data["name"];
+	$pwdCorrect = $data["pwdCorrect"];
 
 	if (!$isActive || !$pwdCorrect) {
 		$this->logger->info("Login Failed: " . $email);
