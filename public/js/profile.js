@@ -14,7 +14,7 @@ function fetchProfile() {
 		$.get("/api/majors"),
 		$.get("/api/user")
 	).done(function(majors, profile) {
-		majorsArray = [];
+		var majorsArray = [];
 		for (i = 0; i < majors[0].length; i++){
 			majorsArray.push(majors[0][i]['major'])
 		}

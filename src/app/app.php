@@ -45,6 +45,10 @@ $app->get('/{body}', function ($request, $response, $args) {
     
 });
 
+$app->get('/movie/{imdbid}', function($request, $response, $args) {
+	//Fill out Route here
+});
+
 $app->post('/login', function($request, $response, $args) {
 	$params = $request->getParsedBody();
 	$email = $params["email"];
