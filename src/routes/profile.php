@@ -43,5 +43,5 @@ $app->get('/api/user', function ($request, $response, $args) {
 
 	$data = getUserProfile($this, $email);
 	
-	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
+	return $response->withJson($data);
 });

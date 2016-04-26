@@ -9,5 +9,5 @@ $app->get('/api/majors', function ($request, $response, $args) {
 	$result = mysqli_prepared_query($this, $link, $query);
 	mysqli_close($link);
 
-	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($result));
+	return $response->withJson($result);
 });

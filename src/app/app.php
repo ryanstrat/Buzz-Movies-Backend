@@ -9,7 +9,13 @@ $app->get('/', function ($request, $response, $args) {
 
 	$args['body'] = "login.php";
 	$args['role'] = $role;
-	return $this->renderer->render($response, 'html.php', $args);
+	if ($role == "user" ) {
+		return $response->withStatus(303)->withHeader('Location', '/recommendation');
+	} elseif ($role == "admin") {
+		return $response->withStatus(303)->withHeader('Location', '/admin');
+	} else {
+		return $this->renderer->render($response, 'html.php', $args);
+	}
 });
 
 $app->any("/logout", function($request, $response, $args) {
@@ -29,10 +35,13 @@ $app->get("/interstitial", function($request, $response, $args) {
 $app->get('/{body}', function ($request, $response, $args) {
     
     $this->logger->info("Application /" . $args['page']);
+
     $args['body'] = $args['body'] . ".php";
     $args['role'] = $_SESSION['role'];
 
-    return $this->renderer->render($response, 'html.php', $args);
+    $params = $request->getQueryParams();
+
+    return $this->renderer->render($response, 'html.php', array_merge($params, $args));
     
 });
 

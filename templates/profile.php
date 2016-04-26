@@ -2,7 +2,7 @@
 <div class="container">
     <div class="col-xs-12 col-sm-9 col-md-6">
         <h1>Update Profile</h1>
-        <form class="form-horizontal">
+        <form id="profileForm" class="form-horizontal">
             <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="major" class="col-sm-2 control-label">Major</label>
                 <div class="col-sm-10">
-                    <select class="form-control" id="profileMajor" name="Major">
+                    <select class="form-control" id="profileMajor" name="major">
                     </select>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success">Update Profile</button>
+                    <button type="submit" form="profileForm" class="btn btn-success">Update Profile</button>
                 </div>
             </div>
         </form>
@@ -38,9 +38,15 @@
         <h1>Change Password</h1>
         <form class="form-horizontal">
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <label for="password" class="col-sm-4 control-label">New Password</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm" class="col-sm-4 control-label">Confirm Password</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm">
                 </div>
             </div>
             <div class="form-group">
