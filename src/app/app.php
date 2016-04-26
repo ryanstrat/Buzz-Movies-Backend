@@ -30,6 +30,7 @@ $app->get('/{body}', function ($request, $response, $args) {
     
     $this->logger->info("Application /" . $args['page']);
     $args['body'] = $args['body'] . ".php";
+    $args['role'] = $_SESSION['role'];
 
     return $this->renderer->render($response, 'html.php', $args);
     
@@ -63,6 +64,7 @@ $app->post('/login', function($request, $response, $args) {
 		}
 	}
 
-	return $response->withStatus(303)->withHeader('Location', '/admin');
+	$url = buildInterstitialURL("Back to Login", "/", "Username or Password Incorrect");
+	return $response->withStatus(303)->withHeader('Location', $url);
 });
 

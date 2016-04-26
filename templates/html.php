@@ -21,25 +21,30 @@
             <?php
 
 
-if($role === "guest") {
-    $hideLogout = "hidden"; 
+if($role != "user") {
+    $hideUser = "hidden"; 
 } else { 
-    $hideLogout = "";
+    $hideUser = "";
+}
+if($role != "user" && $role != "admin") {
+    $hideAll = "hidden"; 
+} else { 
+    $hideAll = "";
 }
 
             ?>
             <div class="collapse navbar-collapse ">
-                <a href="/logout" class="btn btn-default navbar-btn navbar-right <?php echo($hideLogout); ?>">Logout</a>
-                <ul class="nav navbar-nav <?php echo($hideLogout); ?>">
+                <ul class="nav navbar-nav <?php echo($hideUser); ?>">
                     <li><a href="/recommendation">Recommendation</a></li>
 
                 </ul>
-                <form class="navbar-form navbar-left <?php echo($hideLogout); ?>" role="search" action="movies" method="get">
+                <form class="navbar-form navbar-left <?php echo($hideUser); ?>" role="search" action="movies" method="get">
                     <div class="form-group">
                         <input type="text" class="form-control" name="q" placeholder="Search Movies">
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
+                <a href="/logout" class="btn btn-default navbar-btn navbar-right <?php echo($hideAll); ?>">Logout</a>
             </div>
         </div>
     </nav>
