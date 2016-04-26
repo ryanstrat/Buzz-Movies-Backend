@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-
+	$.post
 	populateMajorList(['Biology', 'Computer Science', 'Electrical Engineering'], 'Computer Science');
 });
 

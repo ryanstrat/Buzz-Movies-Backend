@@ -93,6 +93,7 @@ function login($app, $email, $password) {
 
 	$data["isActive"] = 0 == strcmp($status, 'active');
 	$data["pwdCorrect"] = password_verify($password, $hash);
+	$data["status"] = $status;
 
 	return $data;
 }

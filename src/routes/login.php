@@ -14,6 +14,7 @@ $app->post('/api/user/login', function ($request, $response, $args) {
 	$isActive = $data["isActive"];
 	$name = $data["name"];
 	$pwdCorrect = $data["pwdCorrect"];
+	$status = $data['status'];
 
 	if (!$isActive || !$pwdCorrect) {
 		$this->logger->info("Login Failed: " . $email);
@@ -56,7 +57,8 @@ $app->post('/api/user/login', function ($request, $response, $args) {
 	$data['name'] = $name;
 	$data['status'] = $status;
 	
+	//var_dump($data);
 
-	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
+	return $response->withJson($data);
 
 });
