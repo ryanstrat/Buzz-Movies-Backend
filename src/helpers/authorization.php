@@ -59,6 +59,17 @@ function get_email_from_key($app, $sessionKey){
 	return $email;
 }
 
+function get_major_from_key($app, $sessionKey) {
+	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
+	$query = "SELECT major FROM sessions INNER JOIN users ON sessions.account_id = users.account_id WHERE sessions.key=?";
+	$SQLparams = array($sessionKey);
+	$result = mysqli_prepared_query($app, $link, $query, "s", $SQLparams);
+	mysqli_close($link);
+
+	$major = $result[0]["major"];
+	return $major;
+}
+
 function get_session_key_from_email($app, $email) {
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 	$query = "SELECT `key` FROM `sessions` INNER JOIN `accounts` ON accounts.id = sessions.account_id WHERE email=?";
