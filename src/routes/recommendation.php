@@ -6,7 +6,9 @@ $app->get('/api/recommendation', function ($request, $response, $args) {
 	$params = $request->getQueryParams();
 
 	$token = $params['token'];
+	$this->logger->info($token);
 	$major = get_major_from_key($this, $token);
+	$this->logger->info($major);
 
 
 	$query = "SELECT movie, AVG(stars) as average FROM ratings INNER JOIN users ON ratings.user=users.account_id WHERE users.major=? GROUP BY movie ORDER BY average DESC LIMIT 3";
