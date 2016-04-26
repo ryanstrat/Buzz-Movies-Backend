@@ -8,7 +8,6 @@
         <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="/js/ajax.js"></script>
         
         <title>Buzz Movies</title>
     </head>
@@ -44,7 +43,10 @@ if($role != "user" && $role != "admin") {
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>
-                <a href="/logout" class="btn btn-default navbar-btn navbar-right <?php echo($hideAll); ?>">Logout</a>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="<?php echo($hideUser); ?>"><a href="/profile">Profile</a></li>
+                    <a href="/logout" class="btn btn-default navbar-btn <?php echo($hideAll); ?>">Logout</a>
+                </ul>
             </div>
         </div>
     </nav>
