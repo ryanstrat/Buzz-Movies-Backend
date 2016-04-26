@@ -54,7 +54,7 @@ $app->get('/api/rating', function($request, $response, $args) {
 
 	$params = $request->getQueryParams();
 
-	$query = "SELECT movie, stars, review, email, major FROM ratings INNER JOIN users";
+	$query = "SELECT movie, stars, review, email, major, name FROM ratings INNER JOIN users";
 	$query = $query . " ON ratings.user=users.account_id";
 	$query = $query . " INNER JOIN accounts ON users.account_id=accounts.id";
 
