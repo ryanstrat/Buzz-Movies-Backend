@@ -11,6 +11,8 @@ if (PHP_SAPI == 'cli-server') {
 require __DIR__ . '/../src/db/db.config';
 require __DIR__ . '/../src/db/db.php';
 require __DIR__ . '/../src/helpers/authorization.php';
+require __DIR__ . '/../src/helpers/helpers.php';
+require __DIR__ . '/../src/helpers/web_helpers.php';
 
 require __DIR__ . '/../vendor/autoload.php';
 

@@ -30,8 +30,17 @@ if($role === "guest") {
             ?>
             <div class="collapse navbar-collapse ">
                 <a href="/logout" class="btn btn-default navbar-btn navbar-right <?php echo($hideLogout); ?>">Logout</a>
-            </div>
+                <ul class="nav navbar-nav <?php echo($hideLogout); ?>">
+                    <li><a href="/recommendation">Recommendation</a></li>
 
+                </ul>
+                <form class="navbar-form navbar-left <?php echo($hideLogout); ?>" role="search" action="movies" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="q" placeholder="Search Movies">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div>
         </div>
     </nav>
     <body>

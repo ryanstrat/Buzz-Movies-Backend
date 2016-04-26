@@ -41,15 +41,7 @@ $app->get('/api/user', function ($request, $response, $args) {
 	$this->logger->info("GET /api/user");
 	$this->logger->info("email: ".$email);
 
-	$query = "SELECT name, major, interests FROM accounts INNER JOIN users ON accounts.id=users.account_id WHERE email=?";
-	$SQLparams = array($email); 
-
-	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
-	$result = mysqli_prepared_query($this, $link, $query, "s", $SQLparams);
-	mysqli_close($link);
-
-	//var_dump($result);
-	$data = $result[0]; //protection again extra db matches
+	$data = getUserProfile($this, $email);
 	
 	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
 });
