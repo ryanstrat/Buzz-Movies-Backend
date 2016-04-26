@@ -21,3 +21,5 @@ include "routes/profile.php";
 include "routes/account.php";
 
 include "routes/ratings.php";
+
+include "routes/majors.php";
