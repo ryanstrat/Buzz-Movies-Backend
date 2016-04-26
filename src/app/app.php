@@ -42,11 +42,6 @@ $app->get('/{body}', function ($request, $response, $args) {
     $params = $request->getQueryParams();
 
     return $this->renderer->render($response, 'html.php', array_merge($params, $args));
-    
-});
-
-$app->get('/movie/{imdbid}', function($request, $response, $args) {
-	//Fill out Route here
 });
 
 $app->post('/login', function($request, $response, $args) {

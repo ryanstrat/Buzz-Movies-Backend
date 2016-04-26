@@ -27,6 +27,7 @@ $app->post('/api/rating', function ($request, $response, $args) {
 
 	if (strlen($imdbid) != 9) {
 		//bad input reply with 400:Bad Request
+		$this->logger->info("Exiting for malformed imdbid");
 		return $response->withStatus(400);
 	}
 
@@ -61,6 +62,9 @@ $app->get('/api/rating', function($request, $response, $args) {
 	$filters = 0;
 	$SQLformat = "";
 
+	if (isset($params['useTokenForEmail'])) {
+		$email = get_email_from_key($this, $params['token']);
+	}
 
 	if (isset($params['email'])) {
 		$email = $params['email'];

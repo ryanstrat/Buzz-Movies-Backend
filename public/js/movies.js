@@ -13,22 +13,10 @@ function populateMovieResults(query) {
 				var $row = renderTableRow(title, year, imdbid);
 
 				$("#movieResults").append($row);
-			})
+			});
 		});
-	console.log(query);
 }
 
-function getURLParameter(sParam) {
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-            return sParameterName[1].replace(/\+/g, " ");
-        }
-    }
-    return;
-}
 
 function renderTableRow(title, year, imdbid, posterSrc) {
 	var tableRowFormat = '<tr><td>title</td><td>year</td>';
@@ -38,7 +26,7 @@ function renderTableRow(title, year, imdbid, posterSrc) {
 	var $row = $($.parseHTML(tableRowFormat))
 	
 	$row.click(function(event) {
-		window.location.href = '/movie/' + imdbid;
+		window.location.href = '/movie?id=' + imdbid;
 
 	})
 
