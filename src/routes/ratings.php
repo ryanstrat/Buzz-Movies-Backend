@@ -63,7 +63,7 @@ $app->get('/api/rating', function($request, $response, $args) {
 	$SQLformat = "";
 
 	if (isset($params['useTokenForEmail'])) {
-		$email = get_email_from_key($this, $params['token']);
+		$params['email'] = get_email_from_key($this, $params['token']);
 	}
 
 	if (isset($params['email'])) {
