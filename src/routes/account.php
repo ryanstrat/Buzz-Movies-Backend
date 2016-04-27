@@ -25,7 +25,7 @@ $app->post('/api/account', function ($request, $response, $args) {
 $app->get('/api/account', function ($request, $response, $args) {
 	$this->logger->info("GET /api/account");
 
-	$query = "SELECT email, name, status FROM accounts";
+	$query = "SELECT email, name, status FROM accounts ORDER BY email";
 
 	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 	$result = mysqli_prepared_query($this, $link, $query);

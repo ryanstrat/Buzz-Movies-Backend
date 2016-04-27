@@ -19,7 +19,7 @@ function populateMovieResults(query) {
 
 
 function renderTableRow(title, year, imdbid, posterSrc) {
-	var tableRowFormat = '<tr><td>title</td><td>year</td>';
+	var tableRowFormat = '<tr><td>title</td><td>year</td></tr>';
 	tableRowFormat = tableRowFormat.replace("title", title);
 	tableRowFormat = tableRowFormat.replace("year", year);
 

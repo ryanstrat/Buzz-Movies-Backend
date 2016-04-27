@@ -27,6 +27,4 @@
             </form>
         </div>
     </div>
-
-    
 </div>
