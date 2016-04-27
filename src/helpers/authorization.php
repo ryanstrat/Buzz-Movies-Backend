@@ -97,3 +97,34 @@ function login($app, $email, $password) {
 
 	return $data;
 }
+
+function register($app, $email, $password, $accountType) {
+	$hash = password_hash($password, PASSWORD_DEFAULT);
+
+	$query = "INSERT INTO accounts (email, hash) VALUES (?,?)";
+	$SQLparams = array($email, $hash); 
+
+	$link = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
+	mysqli_prepared_query($app, $link, $query, "ss", $SQLparams);
+	$accountID = mysqli_insert_id($link);
+
+	if ($accountType == "admin") {
+		$app->logger->info("Registering as admin");
+		$query = "INSERT INTO admins(account_id) VALUES (" . $accountID . ")";
+		mysqli_query($link, $query);
+	} else if ($accountType == "user") {
+		$app->logger->info("Registering as user");
+		$query = "INSERT INTO users(account_id) VALUES (" . $accountID . ")";
+		mysqli_query($link, $query);
+	} else {
+		return array("login"=>False, "error"=>"Registration Failed");
+	}
+	mysqli_close($link);
+
+	$data['token'] = generate_session_key($this, $email);
+	$data['login'] = True;
+	$data['accountType'] = $accountType;
+
+	return $data;
+
+}

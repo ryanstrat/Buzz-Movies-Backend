@@ -34,7 +34,12 @@ $app->get("/interstitial", function($request, $response, $args) {
 
 $app->get('/{body}', function ($request, $response, $args) {
     
-    $this->logger->info("Application /" . $args['page']);
+    $this->logger->info("Application /" . $args['body']);
+
+    if(!isset($_SESSION['role'])) {
+    	return $response->withStatus(303)->withHeader('Location', '/');
+    }
+
 
     $args['body'] = $args['body'] . ".php";
     $args['role'] = $_SESSION['role'];
@@ -72,7 +77,31 @@ $app->post('/login', function($request, $response, $args) {
 		}
 	}
 
-	$url = buildInterstitialURL("Back to Login", "/", "Username or Password Incorrect");
+	if (!$isActive && $pwdCorrect) {
+		$error = "Account is disabled";
+	} else {
+		$error = "Username or Password Incorrect";
+	}
+
+	$url = buildInterstitialURL("Back to Login", "/", $error);
 	return $response->withStatus(303)->withHeader('Location', $url);
+});
+
+$app->post('/register', function($request, $response, $args) {
+	$params = $request->getParsedBody();
+	$email = $params["email"];
+	$password = $params["password"];
+
+	$data = register($this, $email, $password, "user");
+
+	if ($data['login'] = True) {
+		$url = buildInterstitialURL("Back to Login", "/", "Registration Successful");
+		session_destroy();
+		return $response->withStatus(303)->withHeader('Location', $url);
+	} else {
+		$this->logger->error("Registration Failed - Email: " . $email);
+		$url = buildInterstitialURL("Back to Login", "/", "Registration Failed");
+		return $response->withStatus(303)->withHeader('Location', $url);
+	}
 });
 
