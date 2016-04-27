@@ -30,11 +30,12 @@ function fetchMovieDetails(imdbid) {
 			
 			var year = value.Year;
 			var title = value.Title;
+			var plot = value.Plot;
 
 			var header = title + " (" + year + ")"
-			console.log(header);
+			console.log(value);
 			$("#movieTitle").text(header);
-			
+			$("#plotWell").text(plot);
 		});
 }
 

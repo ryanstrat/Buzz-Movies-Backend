@@ -5,7 +5,12 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-8">
-            <h1>Reviewing: <span class="text-primary" id="movieTitle"></span></h1>
+            <h1 id="movieTitle"></h1>
+            <div id="plotWell" class="well">
+                <!-- plot -->
+            </div>
+            <hr>
+            <h1>Review:</h1>
             <form class="form-horizontal" id="reviewForm">
                 <div class="form-group">
                     <label for="starRating" class="col-sm-2 control-label">Rating</label>

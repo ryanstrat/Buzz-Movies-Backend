@@ -20,5 +20,5 @@ $app->get('/api/recommendation', function ($request, $response, $args) {
 
 	$data = $result[0];
 
-	return $response->withHeader('Content-Type', 'application/json')->write(json_encode($data));
+	return $response->withJson($data);
 });
